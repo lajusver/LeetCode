@@ -11,6 +11,7 @@ class Solution {
                 res++;
                 left++;
             }
+            
         }
         return res;
     }
