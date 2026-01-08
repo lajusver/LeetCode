@@ -1,0 +1,39 @@
+class Solution {
+    public int maxDotProduct(int[] nums1, int[] nums2) {
+        int n = nums1.length;
+        int m = nums2.length;
+
+        int[][] dp = new int[n][m];
+
+        // Initialize dp
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                dp[i][j] = nums1[i] * nums2[j]; // at least one pair
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+
+                int product = nums1[i] * nums2[j];
+
+                if (i > 0 && j > 0) {
+                    // Extend previous subsequence
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + product);
+                }
+
+                if (i > 0) {
+                    // Skip nums1[i]
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j]);
+                }
+
+                if (j > 0) {
+                    // Skip nums2[j]
+                    dp[i][j] = Math.max(dp[i][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        return dp[n - 1][m - 1];
+    }
+}
